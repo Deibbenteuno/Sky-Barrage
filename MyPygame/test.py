@@ -43,7 +43,7 @@ enemy_image = pygame.transform.scale(enemy_image, (50, 50))
 
 # Load enemy bullet image
 enemy_bullet_image = pygame.image.load("enemy_bullet.png")
-enemy_bullet_image = pygame.transform.scale(enemy_bullet_image, (30, 20))
+enemy_bullet_image = pygame.transform.scale(enemy_bullet_image, (40, 30))
 
 # Load power-up images
 health_pack_image = pygame.image.load("health_pack.png")
@@ -63,6 +63,7 @@ font = pygame.font.Font(None, 36)
 running = True
 game_over = False
 game_frozen = False
+in_main_menu = True  # Track if in main menu
 
 # Player class
 class Player(pygame.sprite.Sprite):
@@ -216,23 +217,116 @@ def adjust_difficulty():
     global ENEMY_SPEED, ENEMY_BULLET_SPEED, ENEMY_FIRE_RATE
     if level == 1:
         ENEMY_SPEED = 2
-        ENEMY_BULLET_SPEED = 4
+        ENEMY_BULLET_SPEED = 3
         ENEMY_FIRE_RATE = 1500  # Fire every 1.5 seconds
     elif level == 2:
         ENEMY_SPEED = 3
-        ENEMY_BULLET_SPEED = 6
+        ENEMY_BULLET_SPEED = 7
         ENEMY_FIRE_RATE = 1000  # Fire every 1 second
     elif level == 3:
         ENEMY_SPEED = 4
-        ENEMY_BULLET_SPEED = 8
+        ENEMY_BULLET_SPEED = 9
         ENEMY_FIRE_RATE = 800  # Fire every 0.8 seconds
 
-# Game setup
-reset_game()
+# Main Menu function
+def main_menu():
+    global in_main_menu
+    while in_main_menu:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        
+        # Render main menu
+        screen.fill((0, 0, 0))  # Black background for the main menu
+        title_text = font.render("SKY BARRAGE", True, WHITE)
+        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 3))
+        
+        start_text = font.render("Press ENTER to Start", True, WHITE)
+        screen.blit(start_text, (WIDTH // 2 - start_text.get_width() // 2, HEIGHT // 2))
+        
+        quit_text = font.render("Press ESC to Quit", True, WHITE)
+        screen.blit(quit_text, (WIDTH // 2 - quit_text.get_width() // 2, HEIGHT // 2 + 50))
+        
+        pygame.display.update()
+
+        # Check for input
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            in_main_menu = False  # Exit the main menu
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
+            quit()
+
+# Main game loop
+# Main menu function
+def main_menu():
+    global in_main_menu
+    while in_main_menu:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+
+        # Render main menu
+        screen.fill((0, 0, 0))  # Black background for the main menu
+        title_text = font.render("SKY BARRAGE", True, WHITE)
+        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 3))
+
+        start_text = font.render("Press ENTER to Start", True, WHITE)
+        screen.blit(start_text, (WIDTH // 2 - start_text.get_width() // 2, HEIGHT // 2))
+
+        quit_text = font.render("Press ESC to Quit", True, WHITE)
+        screen.blit(quit_text, (WIDTH // 2 - quit_text.get_width() // 2, HEIGHT // 2 + 50))
+
+        pygame.display.update()
+
+        # Check for input
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:
+            in_main_menu = False  # Exit the main menu
+        if keys[pygame.K_ESCAPE]:
+            pygame.quit()
+            quit()
+
+# Main game loop
+# Main menu function
+def main_menu():
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+        
+        # Render main menu
+        screen.fill((0, 0, 0))  # Black background for the main menu
+        title_text = font.render("SKY BARRAGE", True, WHITE)
+        screen.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 3))
+
+        start_text = font.render("Press ENTER to Start", True, WHITE)
+        screen.blit(start_text, (WIDTH // 2 - start_text.get_width() // 2, HEIGHT // 2))
+
+        quit_text = font.render("Press ESC to Quit", True, WHITE)
+        screen.blit(quit_text, (WIDTH // 2 - quit_text.get_width() // 2, HEIGHT // 2 + 50))
+
+        pygame.display.update()
+
+        # Check for input
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RETURN]:  # Press Enter to start the game
+            return
+        if keys[pygame.K_ESCAPE]:  # Press Escape to quit the game
+            pygame.quit()
+            quit()
+
+# Show main menu
+main_menu()
+
+# Game loop (starts after main menu)
+reset_game()  # Reset the game before starting
 clock = pygame.time.Clock()
 last_enemy_fire_time = 0  # Time tracking for enemy firing
 
-# Main game loop
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
