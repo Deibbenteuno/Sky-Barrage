@@ -216,15 +216,15 @@ def adjust_difficulty():
     global ENEMY_SPEED, ENEMY_BULLET_SPEED, ENEMY_FIRE_RATE
     if level == 1:
         ENEMY_SPEED = 2
-        ENEMY_BULLET_SPEED = 5
+        ENEMY_BULLET_SPEED = 4
         ENEMY_FIRE_RATE = 1500  # Fire every 1.5 seconds
     elif level == 2:
         ENEMY_SPEED = 3
-        ENEMY_BULLET_SPEED = 7
+        ENEMY_BULLET_SPEED = 6
         ENEMY_FIRE_RATE = 1000  # Fire every 1 second
     elif level == 3:
         ENEMY_SPEED = 4
-        ENEMY_BULLET_SPEED = 9
+        ENEMY_BULLET_SPEED = 8
         ENEMY_FIRE_RATE = 800  # Fire every 0.8 seconds
 
 # Game setup
